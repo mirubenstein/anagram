@@ -5,11 +5,14 @@ class Anagram
     @word = word
   end
 
-  def match(possible_anagrams)
-    possible_anagrams.select do |possible_anagram|
-      possible_anagram.upcase.chars.sort == word.upcase.chars.sort &&
-        possible_anagram.upcase != word.upcase
-    end
+  def match(candidates)
+    candidates
+      .reject { |candidate| candidate.upcase == word.upcase }
+      .select { |candidate| normalize(candidate) == normalize(word) }
+  end
+
+  def normalize(word)
+    word.upcase.chars.sort
   end
 end
 
